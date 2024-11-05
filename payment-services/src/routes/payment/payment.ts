@@ -10,7 +10,9 @@ import { Payment } from "../../model/Payment";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
+  const zeybik = await Order.find({});
+  console.log(zeybik);
   res.send("Hello from payment service");
 });
 
@@ -22,14 +24,12 @@ router.post(
     const { token, orderId } = req.body;
 
     const order = await Order.findById(orderId);
-
     console.log(order);
+
     if (!order) {
       throw new Error("Order not found");
     }
-    if (order.userId !== req.currentUser!.id) {
-      throw new Error("Unauthorized");
-    }
+
     if (order.status === OrderStatus.Cancelled) {
       throw new Error("Order is cancelled");
     }

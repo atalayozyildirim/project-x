@@ -3,7 +3,6 @@ import router from "./routes";
 import { natsWrapper } from "./natsWrapper";
 import { OrderCreatedListener } from "./event/listener/Order-Created-listener";
 import { OrderCancelledEvents } from "./event/listener/Order-cancelled-listener";
-import { PaymentCreatedPublisher } from "./event/publisher/Payment-Created-Publisher";
 
 import { connectDatabase } from "./config/connectDB";
 

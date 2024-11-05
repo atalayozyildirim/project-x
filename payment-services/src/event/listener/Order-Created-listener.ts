@@ -7,7 +7,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   queueGroupName = "payment-service";
 
   async onMessage(data: OrderCreatedEvent["data"], msg: Message) {
-    const order = Order.build({
+    const order = await Order.build({
       id: data.id,
       version: data.version,
       status: data.status,
@@ -15,9 +15,12 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
       userId: data.userId,
     });
 
-    console.log("Order created event data", data);
-    await order.save();
-
-    msg.ack();
+    try {
+      await order.save();
+      console.log("Order saved to database:", order);
+      msg.ack();
+    } catch (error) {
+      console.error("Error saving order to database:", error);
+    }
   }
 }
