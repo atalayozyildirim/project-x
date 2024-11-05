@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expirations-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expirations
+  template:
+    metadata:
+      labels:
+        app: expirations
+    spec:
+      containers:
+        - name: expirations
+          image: project-x/expirations
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: nats://nats-srv:4222
+            - name: NATS_CLUSTER_ID
+              value: ticketing
+            - name : JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+              
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expirations-srv
+spec:
+  selector:
+    app: expirations
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+      

@@ -1,0 +1,6 @@
+{
+  "deno.enable": false,
+  "yaml.schemas": {
+    "https://json.schemastore.org/case_schema.json": "file:///c%3A/Users/atala/Desktop/project-x/infra/k8s/ingress-srv.yaml"
+  }
+}

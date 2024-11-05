@@ -1,0 +1,18 @@
+{
+  "name": "nats-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "publisher": "tsc-watch --onSuccess \"node dist/publisher.js\"",
+    "consumer": "tsc-watch --onSuccess \"node dist/consumer.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/node": "^22.8.2",
+    "node-nats-streaming": "^0.3.2",
+    "tsc-watch": "^6.2.0"
+  }
+}

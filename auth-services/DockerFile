@@ -1,0 +1,15 @@
+FROM node:alpine
+
+WORKDIR /app
+
+# package.json ve package-lock.json dosyalarını kopyalayın
+COPY package*.json ./
+
+# Bağımlılıkları yükleyin
+RUN npm install 
+
+# Uygulama kodunu kopyalayın
+COPY . .
+
+# Uygulamayı başlatın
+CMD ["npm", "start"]
